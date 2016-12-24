@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content padding>
-  <button ion-button (click)=getFile()>Get My File</button>
+  <button ion-button (click)=getFile() [disabled]="loadingState">Get My File <ion-spinner *ngIf="loadingState"></ion-spinner></button>
   <h2>Welcome to Ionic!</h2>
   <p>
     This starter project comes with simple tabs-based layout for apps

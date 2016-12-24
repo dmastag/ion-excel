@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NavController } from 'ionic-angular';
+import { NavController, Platform } from 'ionic-angular';
 import { Transfer, FileOpener } from 'ionic-native';
 declare var cordova: any;
 
@@ -10,19 +10,29 @@ declare var cordova: any;
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController) {
+  public loadingState: boolean = false;
+
+  constructor(
+    public navCtrl: NavController,
+    public platform: Platform
+  ) {
 
   }
 
   getFile() {
-    let localPath = cordova.file.cacheDirectory + '/test.xlsx';
+    this.loadingState = true;
+    let localPath = this.platform.is('android') ? cordova.file.externalDataDirectory + '/employee.xlsx' : cordova.file.cacheDirectory + '/employee.xlsx';
     let transfer = new Transfer();
     transfer
       .download('http://192.168.0.12:3000/api/employees/download', localPath)
       .then((entry) => {
         console.log('download complete: ' + entry.toURL(), entry);
-        FileOpener.open(entry.toURL(), 'application/vnd.ms-excel')
-      }, (error) => console.log(error))
+        FileOpener.open(entry.toURL(), 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        this.loadingState = false;
+      }, (error) => {
+        console.log(error)
+        this.loadingState = false;
+      })
   }
 
 }
