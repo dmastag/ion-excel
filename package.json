@@ -36,7 +36,10 @@
     "cordova-plugin-statusbar",
     "cordova-plugin-device",
     "ionic-plugin-keyboard",
-    "cordova-plugin-splashscreen"
+    "cordova-plugin-splashscreen",
+    "cordova-plugin-file-transfer",
+    "cordova-plugin-file-opener2",
+    "cordova-plugin-compat"
   ],
   "cordovaPlatforms": [],
   "description": "ion-excel: An Ionic project"
